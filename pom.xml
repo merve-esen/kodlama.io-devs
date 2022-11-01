@@ -8,10 +8,10 @@
 		<version>2.7.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>kodlama.io</groupId>
-	<artifactId>devs</artifactId>
+	<groupId>com.example</groupId>
+	<artifactId>kodlama.io.devs</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>devs</name>
+	<name>kodlama.io.devs</name>
 	<description>kodlama.io Java camp 2022 project</description>
 	<properties>
 		<java.version>17</java.version>
