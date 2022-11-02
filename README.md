@@ -1,1 +1,1 @@
-# kodlama.io-devs
+# kodlama.io Java Camp project
