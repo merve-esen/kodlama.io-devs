@@ -9,9 +9,9 @@ import kodlama.io.devs.business.responses.GetAllTechnologiesResponse;
 import kodlama.io.devs.business.responses.GetTechnologyByIdResponse;
 
 public interface TechnologyService {
+	List<GetAllTechnologiesResponse> getAll();
+	GetTechnologyByIdResponse getById(int id);
 	void add(CreateTechnologyRequest createTechnologyRequest);
 	void update(UpdateTechnologyRequest updateTechnologyRequest);
 	void delete(DeleteTechnologyRequest deleteTechnologyRequest);
-	List<GetAllTechnologiesResponse> getAll();
-	GetTechnologyByIdResponse getById(int id);
 }

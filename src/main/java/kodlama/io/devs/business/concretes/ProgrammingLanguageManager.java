@@ -25,6 +25,33 @@ public class ProgrammingLanguageManager implements ProgrammingLanguageService {
 	}
 
 	@Override
+	public List<GetAllProgrammingLanguagesResponse> getAll() {
+		List<ProgrammingLanguage> programmingLanguages = programmingLanguageRepository.findAll();
+		List<GetAllProgrammingLanguagesResponse> getAllProgrammingLanguagesResponse = new ArrayList<GetAllProgrammingLanguagesResponse>();
+
+		for (ProgrammingLanguage programmingLanguage : programmingLanguages) {
+			GetAllProgrammingLanguagesResponse responseItem = new GetAllProgrammingLanguagesResponse();
+			responseItem.setId(programmingLanguage.getId());
+			responseItem.setName(programmingLanguage.getName());
+
+			getAllProgrammingLanguagesResponse.add(responseItem);
+		}
+
+		return getAllProgrammingLanguagesResponse;
+	}
+
+	@Override
+	public GetProgrammingLanguageByIdResponse getById(int id) {
+		ProgrammingLanguage programmingLanguage = programmingLanguageRepository.getReferenceById(id);
+		GetProgrammingLanguageByIdResponse getProgrammingLanguageByIdResponse = new GetProgrammingLanguageByIdResponse();
+
+		getProgrammingLanguageByIdResponse.setId(programmingLanguage.getId());
+		getProgrammingLanguageByIdResponse.setName(programmingLanguage.getName());
+
+		return getProgrammingLanguageByIdResponse;
+	}
+
+	@Override
 	public void add(CreateProgrammingLanguageRequest createProgrammingLanguageRequest){
 		try {
 			ProgrammingLanguage programmingLanguage = new ProgrammingLanguage();
@@ -51,33 +78,6 @@ public class ProgrammingLanguageManager implements ProgrammingLanguageService {
 	@Override
 	public void delete(DeleteProgrammingLanguageRequest deleteProgrammingLanguageRequest) {
 		programmingLanguageRepository.deleteById(deleteProgrammingLanguageRequest.getId());
-	}
-
-	@Override
-	public List<GetAllProgrammingLanguagesResponse> getAll() {
-		List<ProgrammingLanguage> programmingLanguages = programmingLanguageRepository.findAll();
-		List<GetAllProgrammingLanguagesResponse> getAllProgrammingLanguagesResponse = new ArrayList<GetAllProgrammingLanguagesResponse>();
-
-		for (ProgrammingLanguage programmingLanguage : programmingLanguages) {
-			GetAllProgrammingLanguagesResponse responseItem = new GetAllProgrammingLanguagesResponse();
-			responseItem.setId(programmingLanguage.getId());
-			responseItem.setName(programmingLanguage.getName());
-
-			getAllProgrammingLanguagesResponse.add(responseItem);
-		}
-
-		return getAllProgrammingLanguagesResponse;
-	}
-
-	@Override
-	public GetProgrammingLanguageByIdResponse getById(int id) {
-		ProgrammingLanguage programmingLanguage = programmingLanguageRepository.getReferenceById(id);
-		GetProgrammingLanguageByIdResponse getProgrammingLanguageByIdResponse = new GetProgrammingLanguageByIdResponse();
-
-		getProgrammingLanguageByIdResponse.setId(programmingLanguage.getId());
-		getProgrammingLanguageByIdResponse.setName(programmingLanguage.getName());
-
-		return getProgrammingLanguageByIdResponse;
 	}
 
 	private boolean isProgrammingLanguageExist(ProgrammingLanguage programmingLanguage){

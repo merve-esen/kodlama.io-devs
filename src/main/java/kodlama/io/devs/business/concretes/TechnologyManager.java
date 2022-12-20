@@ -30,6 +30,35 @@ public class TechnologyManager implements TechnologyService {
 	}
 
 	@Override
+	public List<GetAllTechnologiesResponse> getAll() {
+		List<Technology> technologies = technologyRepository.findAll();
+		List<GetAllTechnologiesResponse> getAllTechnologiesResponse = new ArrayList<GetAllTechnologiesResponse>();
+
+		for (Technology technology : technologies) {
+			GetAllTechnologiesResponse responseItem = new GetAllTechnologiesResponse();
+			responseItem.setId(technology.getId());
+			responseItem.setProgrammingLanguageName(technology.getProgrammingLanguage().getName());
+			responseItem.setName(technology.getName());
+
+			getAllTechnologiesResponse.add(responseItem);
+		}
+
+		return getAllTechnologiesResponse;
+	}
+
+	@Override
+	public GetTechnologyByIdResponse getById(int id) {
+		Technology technology = technologyRepository.getReferenceById(id);
+		GetTechnologyByIdResponse getTechnologyByIdResponse = new GetTechnologyByIdResponse();
+
+		getTechnologyByIdResponse.setId(technology.getId());
+		getTechnologyByIdResponse.setProgrammingLanguageName(technology.getProgrammingLanguage().getName());
+		getTechnologyByIdResponse.setName(technology.getName());
+
+		return getTechnologyByIdResponse;
+	}
+
+	@Override
 	public void add(CreateTechnologyRequest createTechnologyRequest) {
 		Technology technology = new Technology();
 		ProgrammingLanguage programmingLanguage = new ProgrammingLanguage();
@@ -64,34 +93,4 @@ public class TechnologyManager implements TechnologyService {
 	public void delete(DeleteTechnologyRequest deleteTechnologyRequest) {
 		technologyRepository.deleteById(deleteTechnologyRequest.getId());
 	}
-
-	@Override
-	public List<GetAllTechnologiesResponse> getAll() {
-		List<Technology> technologies = technologyRepository.findAll();
-		List<GetAllTechnologiesResponse> getAllTechnologiesResponse = new ArrayList<GetAllTechnologiesResponse>();
-
-		for (Technology technology : technologies) {
-			GetAllTechnologiesResponse responseItem = new GetAllTechnologiesResponse();
-			responseItem.setId(technology.getId());
-			responseItem.setProgrammingLanguageName(technology.getProgrammingLanguage().getName());
-			responseItem.setName(technology.getName());
-
-			getAllTechnologiesResponse.add(responseItem);
-		}
-
-		return getAllTechnologiesResponse;
-	}
-
-	@Override
-	public GetTechnologyByIdResponse getById(int id) {
-		Technology technology = technologyRepository.getReferenceById(id);
-		GetTechnologyByIdResponse getTechnologyByIdResponse = new GetTechnologyByIdResponse();
-
-		getTechnologyByIdResponse.setId(technology.getId());
-		getTechnologyByIdResponse.setProgrammingLanguageName(technology.getProgrammingLanguage().getName());
-		getTechnologyByIdResponse.setName(technology.getName());
-
-		return getTechnologyByIdResponse;
-	}
-
 }

@@ -28,6 +28,16 @@ public class TechnologiesController {
         this.technologyService = technologyService;
     }
 
+    @GetMapping("/getall")
+    public List<GetAllTechnologiesResponse> getAll() {
+        return technologyService.getAll();
+    }
+
+    @GetMapping("/{id}")
+	public GetTechnologyByIdResponse getById(@PathVariable int id) {
+		return technologyService.getById(id);
+	}
+
     @PostMapping("/add")
     public void add(CreateTechnologyRequest createTechnologyRequest) throws Exception {
         technologyService.add(createTechnologyRequest);
@@ -42,15 +52,4 @@ public class TechnologiesController {
 	public void delete(DeleteTechnologyRequest deleteTechnologyRequest) {
 		technologyService.delete(deleteTechnologyRequest);
 	}
-
-    @GetMapping("/getall")
-    public List<GetAllTechnologiesResponse> getAll() {
-        return technologyService.getAll();
-    }
-
-    @GetMapping("/{id}")
-	public GetTechnologyByIdResponse getById(@PathVariable int id) {
-		return technologyService.getById(id);
-	}
-
 }

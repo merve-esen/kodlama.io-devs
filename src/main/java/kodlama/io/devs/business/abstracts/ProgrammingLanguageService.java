@@ -9,9 +9,9 @@ import kodlama.io.devs.business.responses.GetAllProgrammingLanguagesResponse;
 import kodlama.io.devs.business.responses.GetProgrammingLanguageByIdResponse;
 
 public interface ProgrammingLanguageService {
+	List<GetAllProgrammingLanguagesResponse> getAll();
+	GetProgrammingLanguageByIdResponse getById(int id);
 	void add(CreateProgrammingLanguageRequest createProgrammingLanguageRequest);
 	void update(UpdateProgrammingLanguageRequest updateProgrammingLanguageRequest);
 	void delete(DeleteProgrammingLanguageRequest deleteProgrammingLanguageRequest);
-	List<GetAllProgrammingLanguagesResponse> getAll();
-	GetProgrammingLanguageByIdResponse getById(int id);
 }
