@@ -1,78 +1,63 @@
 package kodlama.io.devs.business.concretes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kodlama.io.devs.business.abstracts.ProgrammingLanguageService;
-import kodlama.io.devs.business.requests.CreateProgrammingLanguageRequest;
-import kodlama.io.devs.business.requests.DeleteProgrammingLanguageRequest;
-import kodlama.io.devs.business.requests.UpdateProgrammingLanguageRequest;
-import kodlama.io.devs.business.responses.GetAllProgrammingLanguagesResponse;
-import kodlama.io.devs.business.responses.GetProgrammingLanguageByIdResponse;
+import kodlama.io.devs.business.mappers.ProgrammingLanguageMapper;
+import kodlama.io.devs.business.requests.programmingLanguages.CreateProgrammingLanguageRequest;
+import kodlama.io.devs.business.requests.programmingLanguages.DeleteProgrammingLanguageRequest;
+import kodlama.io.devs.business.requests.programmingLanguages.UpdateProgrammingLanguageRequest;
+import kodlama.io.devs.business.responses.programmingLanguages.CreateProgrammingLanguageResponse;
+import kodlama.io.devs.business.responses.programmingLanguages.GetAllProgrammingLanguagesResponse;
+import kodlama.io.devs.business.responses.programmingLanguages.GetProgrammingLanguageByIdResponse;
+import kodlama.io.devs.business.responses.programmingLanguages.UpdateProgrammingLanguageResponse;
 import kodlama.io.devs.dataAccess.abstracts.ProgrammingLanguageRepository;
 import kodlama.io.devs.entities.concretes.ProgrammingLanguage;
 
 @Service
 public class ProgrammingLanguageManager implements ProgrammingLanguageService {
 	private ProgrammingLanguageRepository programmingLanguageRepository;
+	private ProgrammingLanguageMapper mapper;
 
 	@Autowired
-	public ProgrammingLanguageManager(ProgrammingLanguageRepository programmingLanguageRepository) {
+	public ProgrammingLanguageManager(ProgrammingLanguageRepository programmingLanguageRepository, ProgrammingLanguageMapper mapper) {
 		this.programmingLanguageRepository = programmingLanguageRepository;
+		this.mapper = mapper;
 	}
 
 	@Override
 	public List<GetAllProgrammingLanguagesResponse> getAll() {
 		List<ProgrammingLanguage> programmingLanguages = programmingLanguageRepository.findAll();
-		List<GetAllProgrammingLanguagesResponse> getAllProgrammingLanguagesResponse = new ArrayList<GetAllProgrammingLanguagesResponse>();
-
-		for (ProgrammingLanguage programmingLanguage : programmingLanguages) {
-			GetAllProgrammingLanguagesResponse responseItem = new GetAllProgrammingLanguagesResponse();
-			responseItem.setId(programmingLanguage.getId());
-			responseItem.setName(programmingLanguage.getName());
-
-			getAllProgrammingLanguagesResponse.add(responseItem);
-		}
-
-		return getAllProgrammingLanguagesResponse;
+		return mapper.toGetAllProgrammingLanguagesResponse(programmingLanguages);
 	}
 
 	@Override
 	public GetProgrammingLanguageByIdResponse getById(int id) {
 		ProgrammingLanguage programmingLanguage = programmingLanguageRepository.getReferenceById(id);
-		GetProgrammingLanguageByIdResponse getProgrammingLanguageByIdResponse = new GetProgrammingLanguageByIdResponse();
-
-		getProgrammingLanguageByIdResponse.setId(programmingLanguage.getId());
-		getProgrammingLanguageByIdResponse.setName(programmingLanguage.getName());
-
-		return getProgrammingLanguageByIdResponse;
+		return mapper.toGetProgrammingLanguageResponse(programmingLanguage);
 	}
 
 	@Override
-	public void add(CreateProgrammingLanguageRequest createProgrammingLanguageRequest){
-		try {
-			ProgrammingLanguage programmingLanguage = new ProgrammingLanguage();
-			programmingLanguage.setName(createProgrammingLanguageRequest.getName());
+	public CreateProgrammingLanguageResponse add(CreateProgrammingLanguageRequest createProgrammingLanguageRequest){
+		ProgrammingLanguage programmingLanguage = mapper.toProgrammingLanguage(createProgrammingLanguageRequest);
 
-			if(isProgrammingLanguageExist(programmingLanguage)) throw new Exception("Bu programlama dili zaten var");
-			if(isProgrammingLanguageEmpty(programmingLanguage)) throw new Exception("Programlama dili boş bırakılamaz");
-
-			programmingLanguageRepository.save(programmingLanguage);
-		} catch (Exception exception) {
-			// TODO: handle exception
-		}
-	}
-
-	@Override
-	public void update(UpdateProgrammingLanguageRequest updateProgrammingLanguageRequest) {
-		ProgrammingLanguage programmingLanguage = new ProgrammingLanguage();
-		programmingLanguage.setId(updateProgrammingLanguageRequest.getId());
-		programmingLanguage.setName(updateProgrammingLanguageRequest.getName());
+		if(isProgrammingLanguageExist(programmingLanguage)) throw new RuntimeException("Bu programlama dili zaten var");
+		if(isProgrammingLanguageEmpty(programmingLanguage)) throw new RuntimeException("Programlama dili boş bırakılamaz");
 
 		programmingLanguageRepository.save(programmingLanguage);
+		return mapper.toCreateProgrammingLanguageResponse(programmingLanguage);
+	}
+
+	@Override
+	public UpdateProgrammingLanguageResponse update(UpdateProgrammingLanguageRequest updateProgrammingLanguageRequest) {
+		ProgrammingLanguage programmingLanguage = programmingLanguageRepository.findById(updateProgrammingLanguageRequest.getId()).get();
+        mapper.update(programmingLanguage, updateProgrammingLanguageRequest);
+
+		programmingLanguageRepository.save(programmingLanguage);
+		return mapper.toUpdateProgrammingLanguageResponse(programmingLanguage);
 	}
 
 	@Override
