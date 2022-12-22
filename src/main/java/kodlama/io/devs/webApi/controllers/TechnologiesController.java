@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kodlama.io.devs.business.abstracts.TechnologyService;
-import kodlama.io.devs.business.requests.CreateTechnologyRequest;
-import kodlama.io.devs.business.requests.DeleteTechnologyRequest;
-import kodlama.io.devs.business.requests.UpdateTechnologyRequest;
-import kodlama.io.devs.business.responses.GetAllTechnologiesResponse;
-import kodlama.io.devs.business.responses.GetTechnologyByIdResponse;
+import kodlama.io.devs.business.requests.technologies.CreateTechnologyRequest;
+import kodlama.io.devs.business.requests.technologies.DeleteTechnologyRequest;
+import kodlama.io.devs.business.requests.technologies.UpdateTechnologyRequest;
+import kodlama.io.devs.business.responses.technologies.CreateTechnologyResponse;
+import kodlama.io.devs.business.responses.technologies.GetAllTechnologiesResponse;
+import kodlama.io.devs.business.responses.technologies.GetTechnologyByIdResponse;
+import kodlama.io.devs.business.responses.technologies.UpdateTechnologyResponse;
 
 @RestController
 @RequestMapping("/api/technologies")
@@ -39,13 +41,13 @@ public class TechnologiesController {
 	}
 
     @PostMapping("/add")
-    public void add(CreateTechnologyRequest createTechnologyRequest) throws Exception {
-        technologyService.add(createTechnologyRequest);
+    public CreateTechnologyResponse add(CreateTechnologyRequest createTechnologyRequest) throws Exception {
+        return technologyService.add(createTechnologyRequest);
     }
 
     @PostMapping("/update")
-    public void update(UpdateTechnologyRequest updateTechnologyRequest) throws Exception {
-        technologyService.update(updateTechnologyRequest);
+    public UpdateTechnologyResponse update(UpdateTechnologyRequest updateTechnologyRequest) throws Exception {
+        return technologyService.update(updateTechnologyRequest);
     }
 
     @DeleteMapping("/delete")
