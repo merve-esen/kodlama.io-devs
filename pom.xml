@@ -8,13 +8,14 @@
 		<version>2.7.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
+	<groupId>com.merveesen</groupId>
 	<artifactId>kodlama.io.devs</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>kodlama.io.devs</name>
 	<description>kodlama.io Java camp 2022 project</description>
 	<properties>
 		<java.version>17</java.version>
+		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -58,12 +59,12 @@
 		<dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>1.5.3.Final</version>
+            <version>${org.mapstruct.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
-            <version>1.5.3.Final</version>
+            <version>${org.mapstruct.version}</version>
         </dependency>
 	</dependencies>
 
