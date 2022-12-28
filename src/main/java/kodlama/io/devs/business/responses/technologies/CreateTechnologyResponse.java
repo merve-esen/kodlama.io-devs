@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateTechnologyResponse {
 	private int id;
-    private int languageId;
+    private int programmingLanguageId;
     private String name;
 }
