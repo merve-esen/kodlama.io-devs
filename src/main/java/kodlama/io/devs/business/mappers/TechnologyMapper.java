@@ -17,17 +17,17 @@ import kodlama.io.devs.entities.concretes.Technology;
 @Mapper(componentModel = "spring")
 public interface TechnologyMapper {
 
-    @Mapping(source = "language.name", target = "languageName")
+    @Mapping(source = "programmingLanguage.name", target = "programmingLanguageName")
     GetAllTechnologiesResponse toGetAllTechnologiesResponse(Technology technology);
     List<GetAllTechnologiesResponse> toGetAllTechnologiesResponse(List<Technology> technologies);
-    @Mapping(source = "language.name", target = "languageName")
+    @Mapping(source = "programmingLanguage.name", target = "programmingLanguageName")
     GetTechnologyByIdResponse toTechnology(Technology technology);
-    @Mapping(source = "languageId", target = "language.id")
+    @Mapping(source = "programmingLanguageId", target = "programmingLanguage.id")
     Technology toTechnology(CreateTechnologyRequest request);
-    @Mapping(source = "language.id", target = "languageId")
+    @Mapping(source = "programmingLanguage.id", target = "programmingLanguageId")
     CreateTechnologyResponse toCreateTechnologyResponse(Technology technology);
-    @Mapping(source = "languageId", target = "language.id")
+    @Mapping(source = "programmingLanguageId", target = "programmingLanguage.id")
     void update(@MappingTarget Technology technology, UpdateTechnologyRequest request);
-    @Mapping(source = "language.id", target = "languageId")
+    @Mapping(source = "programmingLanguage.id", target = "programmingLanguageId")
     UpdateTechnologyResponse toUpdateTechnologyResponse(Technology technology);
 }
