@@ -19,16 +19,22 @@ public interface TechnologyMapper {
 
     @Mapping(source = "programmingLanguage.name", target = "programmingLanguageName")
     GetAllTechnologiesResponse toGetAllTechnologiesResponse(Technology technology);
+
     List<GetAllTechnologiesResponse> toGetAllTechnologiesResponse(List<Technology> technologies);
+
     @Mapping(source = "programmingLanguage.name", target = "programmingLanguageName")
     GetTechnologyByIdResponse toTechnology(Technology technology);
+
     @Mapping(source = "programmingLanguageId", target = "programmingLanguage.id")
     @Mapping(target = "id", ignore = true)
     Technology toTechnology(CreateTechnologyRequest request);
+
     @Mapping(source = "programmingLanguage.id", target = "programmingLanguageId")
     CreateTechnologyResponse toCreateTechnologyResponse(Technology technology);
+
     @Mapping(source = "programmingLanguageId", target = "programmingLanguage.id")
     void update(@MappingTarget Technology technology, UpdateTechnologyRequest request);
+
     @Mapping(source = "programmingLanguage.id", target = "programmingLanguageId")
     UpdateTechnologyResponse toUpdateTechnologyResponse(Technology technology);
 }
