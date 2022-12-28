@@ -23,6 +23,7 @@ public interface TechnologyMapper {
     @Mapping(source = "programmingLanguage.name", target = "programmingLanguageName")
     GetTechnologyByIdResponse toTechnology(Technology technology);
     @Mapping(source = "programmingLanguageId", target = "programmingLanguage.id")
+    @Mapping(target = "id", ignore = true)
     Technology toTechnology(CreateTechnologyRequest request);
     @Mapping(source = "programmingLanguage.id", target = "programmingLanguageId")
     CreateTechnologyResponse toCreateTechnologyResponse(Technology technology);
