@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kodlama.io.devs.business.abstracts.ProgrammingLanguageService;
+import kodlama.io.devs.business.constants.Messages;
 import kodlama.io.devs.business.mappers.ProgrammingLanguageMapper;
 import kodlama.io.devs.business.requests.programmingLanguages.CreateProgrammingLanguageRequest;
 import kodlama.io.devs.business.requests.programmingLanguages.DeleteProgrammingLanguageRequest;
@@ -44,8 +45,8 @@ public class ProgrammingLanguageManager implements ProgrammingLanguageService {
 	public CreateProgrammingLanguageResponse add(CreateProgrammingLanguageRequest createProgrammingLanguageRequest){
 		ProgrammingLanguage programmingLanguage = mapper.toProgrammingLanguage(createProgrammingLanguageRequest);
 
-		if(isProgrammingLanguageExist(programmingLanguage)) throw new RuntimeException("Bu programlama dili zaten var");
-		if(isProgrammingLanguageEmpty(programmingLanguage)) throw new RuntimeException("Programlama dili boş bırakılamaz");
+		if(isProgrammingLanguageExist(programmingLanguage)) throw new RuntimeException(Messages.PROGRAMMING_LANGUAGE_ALREADY_EXISTS);
+		if(isProgrammingLanguageEmpty(programmingLanguage)) throw new RuntimeException(Messages.PROGRAMMING_LANGUAGE_NAME_IS_NOT_VALID);
 
 		programmingLanguageRepository.save(programmingLanguage);
 		return mapper.toCreateProgrammingLanguageResponse(programmingLanguage);
