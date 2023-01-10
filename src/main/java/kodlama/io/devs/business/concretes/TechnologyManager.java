@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kodlama.io.devs.business.abstracts.TechnologyService;
+import kodlama.io.devs.business.constants.Messages;
 import kodlama.io.devs.business.mappers.TechnologyMapper;
 import kodlama.io.devs.business.requests.technologies.CreateTechnologyRequest;
 import kodlama.io.devs.business.requests.technologies.DeleteTechnologyRequest;
@@ -43,6 +44,9 @@ public class TechnologyManager implements TechnologyService {
 	@Override
 	public CreateTechnologyResponse add(CreateTechnologyRequest createTechnologyRequest) {
 		Technology technology = mapper.toTechnology(createTechnologyRequest);
+
+		if(isTechnologyExist(technology)) throw new RuntimeException(Messages.TECHNOLOGY_ALREADY_EXISTS);
+
 		technologyRepository.save(technology);
 		return mapper.toCreateTechnologyResponse(technology);
 	}
@@ -59,4 +63,13 @@ public class TechnologyManager implements TechnologyService {
 	public void delete(DeleteTechnologyRequest deleteTechnologyRequest) {
 		technologyRepository.deleteById(deleteTechnologyRequest.getId());
 	}
+
+	private boolean isTechnologyExist(Technology technology){
+        for (Technology technologies : this.technologyRepository.findAll()){
+            if (technologies.getName().equals(technology.getName())){
+                return true;
+            }
+        }
+        return false;
+    }
 }
